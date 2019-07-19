@@ -1,5 +1,0 @@
-baseURL = "https://jamesbland123.github.io/"
-languageCode = "en-us"
-title = "James Bland - DevOps Magic"
-theme = "ananke"
-publishDir = "docs"
