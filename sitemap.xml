@@ -3,12 +3,54 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jamesbland123.github.io/categories/</loc>
-    <priority>0</priority>
+    <loc>https://jamesbland123.github.io/posts/fix-release-deployment-pain/</loc>
+    <lastmod>2019-07-19T09:57:50-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://jamesbland123.github.io/</loc>
+    <lastmod>2019-07-19T09:57:50-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/posts/</loc>
+    <lastmod>2019-07-19T09:57:50-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/posts/monitoring-what-to-monitor/</loc>
+    <lastmod>2019-07-12T10:41:45-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/posts/tools-of-the-devops-trade/</loc>
+    <lastmod>2019-07-06T10:35:01-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/posts/docker-ideal-tools-container/</loc>
+    <lastmod>2019-06-28T10:26:35-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/posts/batch-remove-aws-instances/</loc>
+    <lastmod>2019-06-21T09:42:40-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/posts/what-is-a-devops-engineer/</loc>
+    <lastmod>2019-06-14T10:14:59-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/posts/la-devops-freq-analysis/</loc>
+    <lastmod>2019-06-07T10:45:04-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jamesbland123.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   

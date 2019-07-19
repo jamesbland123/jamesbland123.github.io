@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>James Bland - DevOps Magic  | How to Fix Release and Deployment Pain</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.55.6" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="How to Fix Release and Deployment Pain" />
+<meta property="og:description" content="Regardless of the size of the organization, anyone who has done more than 2 releases or deployments knows about the pains involved. Sometimes the deployment fails right away and you spend hours trying to figure out the problem so you don’t have to roll back. Other times it’s a wakeup call at 2:00 AM to tell you the service is down. Regardless of how it happens, it’s always painful." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jamesbland123.github.io/posts/fix-release-deployment-pain/" />
+<meta property="article:published_time" content="2019-07-19T09:57:50-07:00"/>
+<meta property="article:modified_time" content="2019-07-19T09:57:50-07:00"/>
+
+<meta itemprop="name" content="How to Fix Release and Deployment Pain">
+<meta itemprop="description" content="Regardless of the size of the organization, anyone who has done more than 2 releases or deployments knows about the pains involved. Sometimes the deployment fails right away and you spend hours trying to figure out the problem so you don’t have to roll back. Other times it’s a wakeup call at 2:00 AM to tell you the service is down. Regardless of how it happens, it’s always painful.">
+
+
+<meta itemprop="datePublished" content="2019-07-19T09:57:50-07:00" />
+<meta itemprop="dateModified" content="2019-07-19T09:57:50-07:00" />
+<meta itemprop="wordCount" content="966">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to Fix Release and Deployment Pain"/>
+<meta name="twitter:description" content="Regardless of the size of the organization, anyone who has done more than 2 releases or deployments knows about the pains involved. Sometimes the deployment fails right away and you spend hours trying to figure out the problem so you don’t have to roll back. Other times it’s a wakeup call at 2:00 AM to tell you the service is down. Regardless of how it happens, it’s always painful."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://jamesbland123.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      James Bland - DevOps Magic
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">How to Fix Release and Deployment Pain</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-07-19T09:57:50-07:00">July 19, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Regardless of the size of the organization, anyone who has done more than 2 releases or deployments knows about the pains involved. Sometimes the deployment fails right away and you spend hours trying to figure out the problem so you don’t have to roll back. Other times it’s a wakeup call at 2:00 AM to tell you the service is down. Regardless of how it happens, it’s always painful.</p>
+
+<h2 id="resist-adding-more-control-and-process">Resist adding more control and process</h2>
+
+<p>I was with an organization that was plagued with release issues.  There was hardly a week that went by that didn’t have some sort of outage or user impact.  It seemed like the harder we tried to reduce issues the more likely we were to have them.  The organizational fix/reaction was to add more process and control.</p>
+
+<p>The organization added another layer to the already chaotic change control process for approvals and added two additional meetings per week for change reviews.  With the added process came added paperwork on the order of 4x more forms and a powerpoint deck that had to be prepared for all releases.  To measure success, uptime was used for the new change process.</p>
+
+<p>Initially, this seemed to reduce outages and downtime, but that was only a side effect that releases had pretty much stopped due to the added overhead of the new process.  After a short time of bliss, the outages and release pain actually got worse.  Thinking back on it now, it makes complete sense why things didn&rsquo;t improve.  When the overhead to release or deploy is increased, teams try and stuff more changes into a single release, which ultimately increases the risk and probability of failure.  So no longer did we have several weeks of changes, we had several months of changes in a single release.  Plus the bigger the release the slower the recovery time when problems are encountered.</p>
+
+<h2 id="release-more-often">Release more often</h2>
+
+<p>For the untrained eye or company, one would assume that you simply need more testing or planning. But unfortunately, in most organizations, you can’t mandate quality, quality needs to be engrained in the organizational culture.  The actual solution is to release more often.  This may seem counter-intuitive but it forces a few things to happen that promotes good deployment behavior.</p>
+
+<p><strong>Releasing more often makes releases faster.</strong>  Uh, wait that sounds like some self-fulfilling mumbo jumbo.  From two of my favorite books, The Goal and The Phoenix Project, reducing batch sizes increase flow.  In The Goal, they are referring to something that is well known in manufacturing processes, which is that smaller batch sizes increase the throughput of the entire production system.  In the context of IT systems increasing the number of releases would naturally mean decreasing the size or complexity of the release, which in turn allows developers, testers, and administrators to work in smaller less complex deployments that are faster. So releasing more often makes releases faster.</p>
+
+<p><strong>Reducing batch size reduces deployment risk.</strong>  Smaller releases are easier to test and plan for.  Getting test coverage in a release with a single change is much easier for everyone involved in the process than with a release with multiple changes.  Smaller releases are also easier to troubleshoot if something does go wrong.  Ideally, if you have one change in a release, more than likely it was the change that caused the issue.</p>
+
+<p><strong>Practice makes perfect/permanent.</strong> Just like an athlete who trains for a game its the practice that allows the athlete to perform well in the competition.  Releasing more often gives the team more practice in releasing and the more practice a team gets the better they become.  I’ve worked on teams that released once a quarter and I can tell you that releases were always painful on that team.  I don’t recall a single release on that team where things didn’t go sideways.  Because we also only did releases once a quarter no one wanted to roll back as it would take another 3 months to get in the features that the business was asking for.</p>
+
+<h2 id="how">How?</h2>
+
+<p>There is no silver bullet.  The most effective way I have found is to simply set a goal and have everyone behind trying to achieve that goal.  I have personally set goals for daily deployments to production and if your a team suffering from a lot of pain during releases this may seem impossible, but it’s achievable.  If you are currently releasing quarterly, try every two weeks, do that for a couple of releases and move it up to weekly and eventually daily.</p>
+
+<p>Trying to release more often will uncover gaps with your release process.  You will need to solve these problems and automate everything you can.  I actually find it fun to prove the naysayers wrong that daily releases are not possible.  To me, large organizations suffer from this as a form of learned helplessness.  You can tell when the reasoning is that “our process” requires change approval, or the change board only meets once a week to approve.  As a realist, it’s not an easy thing to take on and will require working with people that will be skeptical if not downright oppose what you are trying to do.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Alleviating or eliminating the issues that come with releases and deployments starts by setting a goal to release more often.  You will need to work with everyone in the release workflow and don’t be surprised if you are looked on with a bit of skepticism.  Work tirelessly to reduce the batch size and release more often.  At first, it’s expected that you will struggle, but as the team gains practice and works through the issues each release will become easier and easier.  Eventually, you will reap the rewards of zero pain releases and faster business value to the end user and customer.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://jamesbland123.github.io/" >
+    &copy; 2019 James Bland - DevOps Magic
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

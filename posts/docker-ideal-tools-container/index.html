@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>James Bland - DevOps Magic  | Docker: The Ideal Tools Container</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.55.6" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Docker: The Ideal Tools Container" />
+<meta property="og:description" content="Besides the obvious use as a container for an application, docker works really well as a tools container that can be shared with developers, DevOps engineers, and operations folks. Just recently I was trying to share a bash wrapper script that I use to execute terraform with a windows developer and this effort quickly became an exercise in futility.
+I didn’t have a lot of time so I told the developer to try Cygwin and see if it worked." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jamesbland123.github.io/posts/docker-ideal-tools-container/" />
+<meta property="article:published_time" content="2019-06-28T10:26:35-07:00"/>
+<meta property="article:modified_time" content="2019-06-28T10:26:35-07:00"/>
+
+<meta itemprop="name" content="Docker: The Ideal Tools Container">
+<meta itemprop="description" content="Besides the obvious use as a container for an application, docker works really well as a tools container that can be shared with developers, DevOps engineers, and operations folks. Just recently I was trying to share a bash wrapper script that I use to execute terraform with a windows developer and this effort quickly became an exercise in futility.
+I didn’t have a lot of time so I told the developer to try Cygwin and see if it worked.">
+
+
+<meta itemprop="datePublished" content="2019-06-28T10:26:35-07:00" />
+<meta itemprop="dateModified" content="2019-06-28T10:26:35-07:00" />
+<meta itemprop="wordCount" content="518">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker: The Ideal Tools Container"/>
+<meta name="twitter:description" content="Besides the obvious use as a container for an application, docker works really well as a tools container that can be shared with developers, DevOps engineers, and operations folks. Just recently I was trying to share a bash wrapper script that I use to execute terraform with a windows developer and this effort quickly became an exercise in futility.
+I didn’t have a lot of time so I told the developer to try Cygwin and see if it worked."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://jamesbland123.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      James Bland - DevOps Magic
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Docker: The Ideal Tools Container</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-06-28T10:26:35-07:00">June 28, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Besides the obvious use as a container for an application, docker works really well as a tools container that can be shared with developers, DevOps engineers, and operations folks.  Just recently I was trying to share a bash wrapper script that I use to execute terraform with a windows developer and this effort quickly became an exercise in futility.</p>
+
+<p>I didn’t have a lot of time so I told the developer to try Cygwin and see if it worked.  I’ve used Cygwin in the past with mixed results and in most cases, it works well until it doesn’t.  In this particular case, it didn’t work and I didn’t want to spend a lot of time on a solution I don’t care much for.  I decided the best approach was to build a tools container.  Basically, everything needed to successfully run all the terraform, packer, make, etc…</p>
+
+<h3 id="dockerfile">Dockerfile:</h3>
+
+<pre><code>## Dockerfile
+FROM python:3.6.7-alpine3.8
+
+RUN apk update &amp;&amp; apk add wget zip bash make nano
+
+RUN pip install --upgrade awscli
+
+RUN wget -nv https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip \
+&amp;&amp; unzip terraform_0.11.10_linux_amd64.zip \
+&amp;&amp; mv terraform /usr/local/bin/terraform \
+&amp;&amp; rm terraform_0.11.10_linux_amd64.zip
+
+RUN wget -nv https://releases.hashicorp.com/packer/1.3.2/packer_1.3.2_linux_amd64.zip \
+&amp;&amp; unzip packer_1.3.2_linux_amd64.zip \
+&amp;&amp; mv packer /usr/local/bin/packer \
+&amp;&amp; rm packer_1.3.2_linux_amd64.zip
+
+WORKDIR /my-repo
+
+CMD [&quot;/bin/bash&quot;]
+</code></pre>
+
+<p>I start with the python:3.x.x alpine image and use apk to add in a few things I need.  Alpine maintains small images which is why I need to add in wget and bash, which tends to be in most builds.  Next I install aws cli, terraform, and packer.  The image defaults to start in /bin/bash, but it really doesn’t matter as this is started from docker run.</p>
+
+<h3 id="run-docker-build">Run docker build:</h3>
+
+<pre><code>$ docker build -t tools .
+</code></pre>
+
+<p>Here we build the docker file and name the image tools.  Don’t forget the “.” on the end.</p>
+
+<h3 id="docker-run">Docker run:</h3>
+
+<pre><code>$ docker run --rm -it -v ${PWD}:/my-repo -v \
+~/.aws:/root/.aws tools /bin/bash
+</code></pre>
+
+<p>With this we run the docker image we built earlier and mount the current directory to /my-repo and mount your aws credentials and profile to be available in the running container.  The mounts assume your Dockerfile and repo are part of your current directory.</p>
+
+<h3 id="a-note-for-windows-users">A Note for windows users:</h3>
+
+<p>You will not be able to use the docker run as mentioned above.  Replace the ${PWD} and ~/.aws with absolute paths such as C:\windows\users\me\my-repo.  Don’t worry about the C: and :/my-repo, two “:”.  Docker knows you are on a windows machine and figures it out.</p>
+
+<p>The other thing for windows users with git repos.  You will need to set your line endings otherwise bash scripts shared from your repo into the container will not run properly.  In your .gitattributes you will need to set shell line endings.</p>
+
+<pre><code># Force LF line endings for Bash scripts.   
+# On Windows, source files will typically 
+# have CR+LF endings (Git default on Windows), 
+# but Bash scripts need to have LF endings 
+*.sh text eol=lf
+</code></pre>
+
+<p>With the above, windows, mac, and linux users can share tools without having to jump through a bunch of hoops and hurdles. Not to mention it should make providing instructions to team members consistent.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://jamesbland123.github.io/" >
+    &copy; 2019 James Bland - DevOps Magic
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
